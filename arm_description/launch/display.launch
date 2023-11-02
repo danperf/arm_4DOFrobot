@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+  <arg name="rvizconfig" default="$(find arm_description)/config.rviz" />
+  <arg name="hardware_interface" default="PositionJointInterface"/> 
+  <arg name="robot_name" default="arm"/>
+ 
+  
+ <!-- settings before arm.urdf.xacro:
+  <param name="robot_description" textfile="$(find arm_description)/urdf/arm.urdf" /> -->
+  
+   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find arm_description)/urdf/arm.urdf.xacro' hardware_interface:=$(arg hardware_interface) robot_name:=$(arg robot_name)" />
+
+  
+ <!-- settings without using gazebo  (these lines must be uncommented when using arm_world.launch)
+
+      <arg name="use_gui" value="false" />
+     
+      <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" output="screen" if="$(arg use_gui)" />  
+      <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" unless="$(arg use_gui)"/>    
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> 
+-->
+  
+  <node name="rviz" pkg="rviz" type="rviz"  args="-d $(arg rvizconfig)"/>
+
+</launch>
